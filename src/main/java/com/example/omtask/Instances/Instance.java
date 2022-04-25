@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,25 +20,18 @@ import java.util.List;
 public class Instance {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "genInstance"
-    )
-    @SequenceGenerator(
-            name = "genInstance",
-            allocationSize = 1
-    )
-    Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @NotBlank
-    String name;
+    private String name;
 
     @NotBlank
     @Column(unique = true)
-    String address;
+    private String address;
 
     @NotBlank
-    Boolean trust;
+    private Boolean trust;
 
     @JsonIgnore
     @OneToMany(
@@ -45,7 +39,7 @@ public class Instance {
         cascade = CascadeType.ALL,
         fetch = FetchType.LAZY
     )
-    List<User> userList;
+    private List<User> userList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(
@@ -53,15 +47,14 @@ public class Instance {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    List<Contract> conCreatedList;
-
+    private List<Contract> conCreatedList = new ArrayList<>();
     @JsonIgnore
     @OneToMany(
             mappedBy = "contractor",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    List<Contract> conContractorList;
+    private List<Contract> conContractorList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(
@@ -69,7 +62,7 @@ public class Instance {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    List<Opinion> opinionSentList;
+    private List<Opinion> opinionSentList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(
@@ -77,5 +70,5 @@ public class Instance {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    List<Opinion> opinionReceivedList;
+    private List<Opinion> opinionReceivedList = new ArrayList<>();
 }

@@ -17,31 +17,24 @@ import javax.validation.constraints.NotBlank;
 public class Opinion {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "genOpinion"
-    )
-    @SequenceGenerator(
-            name = "genOpinion",
-            allocationSize = 1
-    )
-    Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @NotBlank
     @ManyToOne
-    User judge;
+    private User judge;
 
     @NotBlank
     @ManyToOne
-    User suspect;
+    private User suspect;
 
     @NotBlank
     @ManyToOne
-    Contract contract;
+    private Contract contract;
 
     @NotBlank
-    Integer rate;
+    private Integer rate;
 
     @NotBlank
-    String content;
+    private String content;
 }

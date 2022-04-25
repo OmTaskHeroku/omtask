@@ -23,44 +23,37 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "genUser"
-    )
-    @SequenceGenerator(
-            name = "genUser",
-            allocationSize = 1
-    )
-    Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @NotBlank
-    String name;
+    private String name;
 
     @NotBlank
-    String surname;
+    private String surname;
 
     @NotBlank
-    String username;
+    private String username;
 
     @NotBlank
     @Email
     @Column(unique = true)
-    String mail;
+    private String mail;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    Collection<Role> roles = new ArrayList<>();
+    private Collection<Role> roles = new ArrayList<>();
 
     @NotBlank
     @JsonIgnore
     private String password;
 
-    String description;
+    private String description;
+
+    @ManyToOne
+    private Instance origin;
 
     @NotBlank
-    @ManyToOne
-    Instance origin;
-
-    Boolean isLeader;
+    private Boolean isLeader;
 
     @JsonIgnore
     @OneToMany(
@@ -68,7 +61,7 @@ public class User {
         cascade = CascadeType.ALL,
         fetch = FetchType.LAZY
     )
-    List<Message> messageSentList = new ArrayList<>();
+    private List<Message> messageSentList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(
@@ -76,7 +69,7 @@ public class User {
         cascade = CascadeType.ALL,
         fetch = FetchType.LAZY
     )
-    List<Message> messageReceivedList;
+    private List<Message> messageReceivedList = new ArrayList<>();
 }
 
 

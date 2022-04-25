@@ -16,28 +16,21 @@ import java.util.Date;
 public class Message {
 
     @Id
-    @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "genMessage"
-    )
-    @SequenceGenerator(
-        name = "genMessage",
-        allocationSize = 1
-    )
-    Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @NotBlank
-    String text;
+    private String text;
 
     @NotBlank
     @Temporal(TemporalType.TIMESTAMP)
-    Date date = new Date();
+    private Date date = new Date();
 
     @NotBlank
     @ManyToOne
-    User sender;
+    private User sender;
 
     @NotBlank
     @ManyToOne
-    User receiver;
+    private User receiver;
 }
