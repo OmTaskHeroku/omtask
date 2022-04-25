@@ -1,9 +1,8 @@
 package com.example.omtask.Users;
 
-import com.example.omtask.Contracts.Contract;
 import com.example.omtask.Instances.Instance;
 import com.example.omtask.Messages.Message;
-import com.example.omtask.Opinions.Opinion;
+import com.example.omtask.Users.Role.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +11,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -39,19 +40,19 @@ public class User {
     String surname;
 
     @NotBlank
-    String nickname;
+    String username;
 
     @NotBlank
     @Email
     @Column(unique = true)
     String mail;
 
-    @NotBlank
-    Enum<UserRole> role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    Collection<Role> roles = new ArrayList<>();
 
     @NotBlank
     @JsonIgnore
-    String password;
+    private String password;
 
     String description;
 
@@ -67,7 +68,7 @@ public class User {
         cascade = CascadeType.ALL,
         fetch = FetchType.LAZY
     )
-    List<Message> messageSentList;
+    List<Message> messageSentList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(
@@ -79,7 +80,3 @@ public class User {
 }
 
 
-enum UserRole {
-
-    A, B, C
-}
