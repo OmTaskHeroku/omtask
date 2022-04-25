@@ -15,7 +15,7 @@ public class OmTaskApplication {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+   BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
