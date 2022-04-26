@@ -52,9 +52,6 @@ public class User {
     @ManyToOne
     private Instance origin;
 
-    @NotBlank
-    private Boolean isLeader;
-
     @JsonIgnore
     @OneToMany(
         mappedBy = "sender",
