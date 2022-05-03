@@ -2,7 +2,6 @@ package com.example.omtask.Users;
 
 import com.example.omtask.Instances.Instance;
 import com.example.omtask.Messages.Message;
-import com.example.omtask.Users.Role.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +11,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -33,6 +31,7 @@ public class User {
     private String surname;
 
     @NotBlank
+    @Column(unique = true)
     private String username;
 
     @NotBlank
@@ -40,14 +39,15 @@ public class User {
     @Column(unique = true)
     private String mail;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
-
     @NotBlank
     @JsonIgnore
     private String password;
 
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "idRole")
+    private Role role;
 
     @ManyToOne
     private Instance origin;
