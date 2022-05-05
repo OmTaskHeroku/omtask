@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TrustRepository extends JpaRepository<Trust, Long> {
+
+    Trust findByName(String name);
 }

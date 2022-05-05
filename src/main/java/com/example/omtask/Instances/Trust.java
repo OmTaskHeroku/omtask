@@ -1,5 +1,6 @@
 package com.example.omtask.Instances;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,11 +16,12 @@ import java.util.List;
 public class Trust {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(unique = true)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "trust", cascade = CascadeType.ALL)
     private List<Instance> instanceList = new ArrayList<>();
 
