@@ -4,11 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.omtask.Instances.InstanceService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -19,6 +21,8 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final InstanceService instanceService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Override
@@ -27,7 +31,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
         if (user == null) throw new UsernameNotFoundException("User not found in the database");
 
-        SimpleGrantedAuthority authorities = null;
+        SimpleGrantedAuthority authorities;
         authorities = new SimpleGrantedAuthority(user.getRole().getName());
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singleton(authorities));
@@ -62,6 +66,14 @@ public class UserService implements UserDetailsService {
         DecodedJWT decodedJWT = verifier.verify(token);
         String username = decodedJWT.getSubject();
         return getUserByUsername(username);
+    }
+
+    public User createUser(User user){
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setOrigin(instanceService.getOriginInstance());
+        saveUser(user);
+        addRoleToUser(user.getUsername(), "ROLE_USER");
+        return user;
     }
 
 }

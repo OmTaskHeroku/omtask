@@ -1,9 +1,13 @@
 package com.example.omtask.Users;
 
+import com.example.omtask.Instances.Instance;
 import com.example.omtask.Instances.InstanceService;
+import com.example.omtask.Instances.Trust;
+import com.example.omtask.Instances.TrustRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +45,13 @@ public class UserConfig {
 //        };
 //    }
 
-//    @Bean
-//    CommandLineRunner CLR(InstanceService instanceService){
-//        return args -> {
-//
-//        };
-//    }
+    @Bean
+    CommandLineRunner CLR(InstanceService instanceService, TrustRepository trustRepository){
+        return args -> {
+            Instance instance = instanceService.getOriginInstance();
+            instance.setName("Test");
+            instance.setTrust(trustRepository.findByName("Origin"));
+            instanceService.save(instance);
+        };
+    }
 }
