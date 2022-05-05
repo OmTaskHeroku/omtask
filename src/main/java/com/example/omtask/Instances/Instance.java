@@ -30,8 +30,8 @@ public class Instance {
     @Column(unique = true)
     private String address;
 
-    @NotBlank
-    private Boolean trust;
+    @ManyToOne
+    private Trust trust;
 
     @JsonIgnore
     @OneToMany(
