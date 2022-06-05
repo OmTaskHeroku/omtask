@@ -33,6 +33,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;

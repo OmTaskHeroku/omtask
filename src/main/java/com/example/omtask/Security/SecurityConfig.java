@@ -13,6 +13,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.SessionManagementFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -36,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
 //        customAuthenticationFilter.setFilterProcessesUrl("/api/login/**");
         http.csrf().disable();
+        http.cors();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeHttpRequests().antMatchers(POST, "/user").permitAll();
         http.authorizeHttpRequests().antMatchers(GET, "/user/token_ref/**").permitAll();
@@ -50,4 +57,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception{
         return super.authenticationManagerBean();
     }
+
 }
