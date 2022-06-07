@@ -45,7 +45,7 @@ public class Contract {
     @NotBlank
     private Date expiration_date;
 
-    @NotBlank
+//    @NotBlank
     @OneToMany(
             mappedBy = "contract",
             cascade = CascadeType.ALL,
