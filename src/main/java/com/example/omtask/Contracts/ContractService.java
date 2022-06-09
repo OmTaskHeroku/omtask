@@ -32,9 +32,9 @@ public class ContractService {
         return contractStatus;
     }
 
-    public Contract saveContract(Contract contract) {
-        return contractRepository.save(contract);
-    }
+//    public Contract saveContract(Contract contract) {
+//        return contractRepository.save(contract);
+//    }
 
     public Contract addNewContract(Contract contract) {
         contract.setTitle(contract.getTitle());

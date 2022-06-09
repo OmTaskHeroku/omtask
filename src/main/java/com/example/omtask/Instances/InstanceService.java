@@ -1,6 +1,9 @@
 package com.example.omtask.Instances;
 
+import com.example.omtask.Users.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +29,16 @@ public class InstanceService {
             instance = new Instance();
             instance.setAddress("origin");
         }
+        return instance;
+    }
+    public Instance AddNewInstance(Instance instance){
+        instance.setName(instance.getName());
+        instance.setAddress(instance.getAddress());
+        String trustName = instance.getName();
+        String instanceAddress = instance.getAddress();
+        instance = instanceRepository.findByAddress(instanceAddress);
+        instance.setTrust(trustRepository.findByName(trustName));
+        instanceRepository.save(instance);
         return instance;
     }
 }
