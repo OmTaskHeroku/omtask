@@ -26,6 +26,12 @@ public class ContractService {
         return contract;
     }
 
+    public Contract getContract(Long Id){
+        Contract contract = contractRepository.findContractById(Id);
+        if(contract == null) throw new IllegalArgumentException("Can't find contract");
+        return contract;
+    }
+
     public ContractStatus findByStatusName(String status) {
         ContractStatus contractStatus = contractStatusRepository.findByStatus(status);
         if (contractStatus == null) throw new IllegalArgumentException("Can't find any matching contract status");
