@@ -7,20 +7,17 @@ import com.example.omtask.Opinions.OpinionRepository;
 import com.example.omtask.Opinions.OpinionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/opinions")
 public class OpinionController {
 
     private final OpinionService opinionService;
-    private final OpinionRepository opinionRepository;
 
     @PostMapping("/new")
-    public ResponseEntity<Opinion> createOpinion(@RequestBody Opinion opinion){  //Valid?
+    public ResponseEntity<Opinion> createOpinion(@RequestBody Opinion opinion){
         return ResponseEntity.ok(opinionService.addNewOpinion(opinion));
     }
 
@@ -33,8 +30,7 @@ public class OpinionController {
         return ResponseEntity.ok(opinionService.getOpinion(Id));
     }
     @GetMapping("/list")
-    public ResponseEntity<?> showAllOpinion(Contract contract) {
-        Opinion opinion = opinionService.ShowAllOpinion(contract);
-        return ResponseEntity.ok().body(opinionService.ShowAllOpinion(contract));
+    public ResponseEntity<?> showAllOpinions() {
+        return ResponseEntity.ok().body(opinionService.ShowAllOpinion());
     }
 }

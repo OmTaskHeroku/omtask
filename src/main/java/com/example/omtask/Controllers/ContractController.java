@@ -31,7 +31,7 @@ public class ContractController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Contract> createContract(@RequestBody Contract contract){  //Valid?
+    public ResponseEntity<Contract> createContract(@RequestBody Contract contract){
         return ResponseEntity.ok(contractService.addNewContract(contract));
     }
 

@@ -2,6 +2,7 @@ package com.example.omtask.Contracts;
 
 import com.example.omtask.Instances.Instance;
 import com.example.omtask.Opinions.Opinion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,6 +47,7 @@ public class Contract {
     private Date expiration_date;
 
 //    @NotBlank
+    @JsonIgnore
     @OneToMany(
             mappedBy = "contract",
             cascade = CascadeType.ALL,

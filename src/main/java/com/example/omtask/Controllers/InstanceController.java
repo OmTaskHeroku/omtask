@@ -11,15 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
+@RequestMapping("/instances")
 public class InstanceController {
 
     private final InstanceService instanceService;
     private final InstanceRepository instanceRepository;
 
-    @PostMapping()
+    @PostMapping("/new")
     public ResponseEntity<Instance>CreateInstance(@RequestBody Instance instance){
         return ResponseEntity.ok(instanceService.AddNewInstance(instance));
     }

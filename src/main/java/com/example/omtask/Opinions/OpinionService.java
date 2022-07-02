@@ -1,7 +1,6 @@
 package com.example.omtask.Opinions;
 
 import com.example.omtask.Contracts.Contract;
-import com.example.omtask.Contracts.ContractStatus;
 import com.example.omtask.Instances.Instance;
 import com.example.omtask.Users.User;
 import com.example.omtask.Users.UserService;
@@ -11,21 +10,27 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
 public class OpinionService {
 
     private final OpinionRepository opinionRepository;
+    private final UserService userService;
 
     public Opinion addNewOpinion(Opinion opinion){
         opinion.setContent(opinion.getContent());
         opinion.setRate(opinion.getRate());
-        Contract contract= opinion.getContract();
-        opinion.setContract(contract);
+        opinion.setContract(opinion.getContract());
+        User suspect = opinion.getSuspect();
+        opinion.setSuspect(suspect);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = (String) auth.getPrincipal();
-        User judge = UserService.getUserByUsername(username);
+        User judge = userService.getUserByUsername(username);
+        if (Objects.equals(judge.getId(), suspect.getId())) throw new IllegalArgumentException("Judge and Suspect can't be the same");
+        opinion.setJudge(judge);
+//        opinionRepository.save(opinion);
         return opinion;
     }
 
@@ -34,9 +39,10 @@ public class OpinionService {
         if(opinion == null) throw new IllegalArgumentException("No comment");
         return opinion;
     }
-    public Opinion ShowAllOpinion(Contract contract){
-        List<Opinion> opinion = opinionRepository.findAllByContract(contract);
+
+    public List<Opinion> ShowAllOpinion(){
+        List<Opinion> opinion = opinionRepository.findAll();
         if (opinion == null) throw new IllegalArgumentException("Can't find any comment");
-        return (Opinion) opinion;
+        return opinion;
     }
 }
