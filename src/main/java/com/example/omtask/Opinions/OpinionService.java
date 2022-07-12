@@ -30,7 +30,7 @@ public class OpinionService {
         User judge = userService.getUserByUsername(username);
         if (Objects.equals(judge.getId(), suspect.getId())) throw new IllegalArgumentException("Judge and Suspect can't be the same");
         opinion.setJudge(judge);
-//        opinionRepository.save(opinion);
+        opinionRepository.save(opinion);
         return opinion;
     }
 
@@ -41,7 +41,12 @@ public class OpinionService {
     }
 
     public List<Opinion> ShowAllOpinion(){
-        List<Opinion> opinion = opinionRepository.findAll();
+        return opinionRepository.findAll();
+    }
+
+    public List<Opinion> ShowOpinionsForOneUser(String suspects_nick){
+        User suspect = userService.getUserByUsername(suspects_nick);
+        List<Opinion> opinion = opinionRepository.findAllBySuspect(suspect);
         if (opinion == null) throw new IllegalArgumentException("Can't find any comment");
         return opinion;
     }

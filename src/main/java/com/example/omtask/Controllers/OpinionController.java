@@ -2,6 +2,7 @@ package com.example.omtask.Controllers;
 
 import com.example.omtask.Contracts.Contract;
 import com.example.omtask.Contracts.ContractStatus;
+import com.example.omtask.Instances.Instance;
 import com.example.omtask.Opinions.Opinion;
 import com.example.omtask.Opinions.OpinionRepository;
 import com.example.omtask.Opinions.OpinionService;
@@ -29,6 +30,12 @@ public class OpinionController {
         }
         return ResponseEntity.ok(opinionService.getOpinion(Id));
     }
+
+    @GetMapping
+    public ResponseEntity<?> showUserOpinions(String suspects_nick) {
+        return ResponseEntity.ok().body(opinionService.ShowOpinionsForOneUser(suspects_nick));
+    }
+
     @GetMapping("/list")
     public ResponseEntity<?> showAllOpinions() {
         return ResponseEntity.ok().body(opinionService.ShowAllOpinion());

@@ -46,6 +46,7 @@ public class ContractService {
         contract.setTitle(contract.getTitle());
         contract.setDescription(contract.getDescription());
         contract.setPrice(contract.getPrice());
+        contract.setStatus(findByStatusName("active"));
         contract.setExpiration_date(contract.getExpiration_date());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = (String) auth.getPrincipal();
@@ -54,8 +55,7 @@ public class ContractService {
         contract.setCreator(origin);
         String address = "origin";
         contract.setContractor(instanceRepository.findByAddress(address));
-        contract.setStatus(findByStatusName("active"));
-//        contractRepository.save(contract);
+        contractRepository.save(contract);
         return contract;
     }
 }

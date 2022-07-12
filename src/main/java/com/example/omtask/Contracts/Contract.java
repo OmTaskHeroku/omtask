@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,21 +30,21 @@ public class Contract {
 
     private String description;
 
-    @NotBlank
+    @NotNull
     private Double price;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private ContractStatus status;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     private Instance creator;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     private Instance contractor;
 
-    @NotBlank
+    @NotNull
     private Date expiration_date;
 
 //    @NotBlank
