@@ -1,5 +1,6 @@
 package com.example.omtask.Contracts;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class ContractStatus {
     private Long id;
     private String status;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "status",
             cascade = CascadeType.ALL,

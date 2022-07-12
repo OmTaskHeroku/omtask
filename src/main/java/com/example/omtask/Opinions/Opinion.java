@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @AllArgsConstructor
@@ -20,21 +21,21 @@ public class Opinion {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     private User judge;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     private User suspect;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     private Contract contract;
 
     @NotBlank
-    private Integer rate;
-
-    @NotBlank
     private String content;
+
+    @NotNull
+    private Integer rate;
 }

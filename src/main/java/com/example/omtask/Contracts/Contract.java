@@ -2,12 +2,14 @@ package com.example.omtask.Contracts;
 
 import com.example.omtask.Instances.Instance;
 import com.example.omtask.Opinions.Opinion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,24 +30,25 @@ public class Contract {
 
     private String description;
 
-    @NotBlank
+    @NotNull
     private Double price;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private ContractStatus status;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     private Instance creator;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     private Instance contractor;
 
-    @NotBlank
+    @NotNull
     private Date expiration_date;
 
-    @NotBlank
+//    @NotBlank
+    @JsonIgnore
     @OneToMany(
             mappedBy = "contract",
             cascade = CascadeType.ALL,

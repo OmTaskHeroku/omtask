@@ -1,7 +1,9 @@
 package com.example.omtask.Instances;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.example.omtask.Users.UserService;
+import lombok.AllArgsConstructor;import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -27,5 +29,22 @@ public class InstanceService {
             instance.setAddress("origin");
         }
         return instance;
+    }
+    public Instance AddNewInstance(Instance instance){
+        instance.setName(instance.getName());
+        instance.setAddress(instance.getAddress());
+        instanceRepository.save(instance);
+        String trustName = "Origin";
+        String instanceAddress = instance.getAddress();
+        addTrustTOInstance(trustName, instanceAddress);
+        return instance;
+    }
+
+    public List<Instance> showTrustedInstances(){
+        String trustName = "Trusted";
+        Trust trust = trustRepository.findByName(trustName);
+        List<Instance> instances = instanceRepository.findAllByTrust(trust);
+        if (instances == null) throw new IllegalArgumentException("Can't find any trusted instance");
+        return instances;
     }
 }
